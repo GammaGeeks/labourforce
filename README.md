@@ -1,3 +1,4 @@
+[![Coverage Status](https://coveralls.io/repos/gitlab/nigorjeanluc/labourforce/badge.svg?branch=develop)](https://coveralls.io/gitlab/nigorjeanluc/labourforce?branch=develop)
 # LabourForce App
 
 The purpose of this project is to ease the hiring on qualified worker in labour that do not neccessary need contracts as agreement between employer and employee.
