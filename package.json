@@ -1,0 +1,19 @@
+{
+  "name": "labourforce",
+  "version": "1.0.0",
+  "description": "The purpose of this project is to ease the hiring on qualified worker in labour that do not neccessary need contracts as agreement between employer and employee.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/nigorjeanluc/labourforce.git"
+  },
+  "author": "Ndiramiye Igor Jean Luc",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/nigorjeanluc/labourforce/issues"
+  },
+  "homepage": "https://gitlab.com/nigorjeanluc/labourforce#readme"
+}
