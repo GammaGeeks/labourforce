@@ -4,7 +4,7 @@
   "description": "The purpose of this project is to ease the hiring on qualified worker in labour that do not neccessary need contracts as agreement between employer and employee.",
   "main": "index.js",
   "scripts": {
-    "test": "cross-env NODE_ENV=test nyc --reporter=text --reporter=lcov mocha --require @babel/register --require babel-polyfill ./*.spec.js --timeout 200000 --exit",
+    "test": "cross-env NODE_ENV=test nyc --reporter=text --reporter=lcov mocha --require @babel/register --require babel-polyfill ./server/tests/*.spec.js --timeout 2000 --exit",
     "dev": "nodemon --exec babel-node ./server/index.js",
     "start": "cross-env NODE_ENV=production npx sequelize-cli db:migrate && cross-env NODE_ENV=production babel-node ./server/index.js",
     "createtables:dev": "npx sequelize db:migrate",
