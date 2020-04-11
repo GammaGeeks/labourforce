@@ -1,4 +1,7 @@
-[![Coverage Status](https://coveralls.io/repos/gitlab/nigorjeanluc/labourforce/badge.svg?branch=develop)](https://coveralls.io/gitlab/nigorjeanluc/labourforce?branch=develop)
+[![Coverage Status](https://coveralls.io/repos/github/GammaGeeks/labourforce/badge.svg?branch=develop)](https://coveralls.io/github/GammaGeeks/labourforce?branch=develop)
+[![Build Status](https://travis-ci.org/GammaGeeks/labourforce.svg?branch=develop)](https://travis-ci.org/GammaGeeks/labourforce)
+[![Maintainability](https://api.codeclimate.com/v1/badges/fc9279b6b2242e1e96de/maintainability)](https://codeclimate.com/github/GammaGeeks/labourforce/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/fc9279b6b2242e1e96de/test_coverage)](https://codeclimate.com/github/GammaGeeks/labourforce/test_coverage)
 # LabourForce App
 
 The purpose of this project is to ease the hiring on qualified worker in labour that do not neccessary need contracts as agreement between employer and employee.
