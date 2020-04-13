@@ -5,6 +5,7 @@ import swagger from 'swagger-ui-express';
 import cors from 'cors';
 // import serverSocket from 'socket.io';
 
+import allRoutes from './routes';
 import apiDocumentation from '../swagger.json';
 
 dotenv.config();
@@ -17,7 +18,7 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-
+app.use(basePath, allRoutes);
 app.use(`${basePath}/documentation`, swagger.serve, swagger.setup(apiDocumentation));
 
 app.get('/', (req, res) => {
