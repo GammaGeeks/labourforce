@@ -5,7 +5,7 @@ import app from "../index";
 Chai.should();
 Chai.use(chaiHttp);
 
-describe('Endpoint /', () => {
+describe('Welcome message endpoint /', () => {
   it("should welcome a users", (done) => {
     Chai.request(app)
       .get("/")
