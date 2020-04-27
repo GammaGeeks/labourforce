@@ -30,14 +30,14 @@ class AuthController {
     const {
       fullname, username, email, gender, role
     } = req.body;
-    const user = {
+    const data = {
       fullname, username, email, gender, role
     };
     await sendmail(savedUser.email, savedUser.fullname);
     return res.status(201).json({
       status: 201,
       message: 'User was created successfully, Verify your email to confirm registration',
-      user
+      data
     });
   }
 
@@ -52,14 +52,14 @@ class AuthController {
     if (!checkConfirmation) {
       return res.status(404).json({
         status: 404,
-        error: 'User not found'
+        error: 'User not founded'
       });
     }
     const result = await userDB.confirm(req.params.email);
     if (result) {
       return res.status(200).json({
         status: 200,
-        message: 'Email has successfully been verified. You can now login'
+        message: 'Email has successfully been verified. You can now login in your account'
       });
     }
   }
