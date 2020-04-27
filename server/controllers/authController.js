@@ -33,7 +33,7 @@ class AuthController {
     const user = {
       fullname, username, email, gender, role
     };
-    await sendmail(savedUser.email, savedUser.name);
+    await sendmail(savedUser.email, savedUser.fullname);
     return res.status(201).json({
       status: 201,
       message: 'User was created successfully, Verify your email to confirm registration',

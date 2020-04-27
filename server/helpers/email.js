@@ -34,7 +34,7 @@ const messageGenerator = async (email, name, intro, action, buttonText, link, su
     mailer.setApiKey(process.env.SENDGRID_API_KEY);
     const message = {
       to: `${email}`,
-      from: 'BarefootNomad@noreply',
+      from: 'labourforce@noreply',
       subject,
       text,
       html: emailTemplate
@@ -52,7 +52,7 @@ const sendmail = async (email, name) => {
     'Please confirm your email',
     'Confirm email',
     `https://labourforce.herokuapp.com/api/user/${email}/confirm`,
-    'Barefoot Nomad Confirmation mail',
+    'Labour Force Confirmation mail',
     `${name}, welcome to LabourForce App, please confirm your mail to get started`
   );
 };
@@ -62,8 +62,8 @@ const userRoleNotification = async (email, name, role) => {
     email,
     name,
     `Your role has been updated to ${role}.`,
-    'Click the button below to visit the Barefoot Nomad website',
-    'BAREFOOT NOMAD',
+    'Click the button below to visit the Labour Force website',
+    'LABOUR FORCE',
     'https://labourforce.herokuapp.com/api',
     'User role status update',
     `Hello ${name}, your privileges have been upgraded.`
