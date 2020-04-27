@@ -1,7 +1,9 @@
 import userDB from '../helpers/userDB';
+import tokenDB from '../helpers/tokenDB';
 import PasswordHasher from '../helpers/passwordHasher';
 import JWT from '../helpers/JWT';
-import { sendmail } from '../helpers/email';
+// import { sendmail } from '../helpers/email';
+import codeDB from '../helpers/codeDB';
 
 /**
  * This class contains all methods
@@ -16,8 +18,8 @@ class AuthController {
    * @returns {object} The status and some data of the user.
    */
   static async signUp(req, res) {
-    const emailExists = await userDB.userExists('email', req.body.email);
-    const usernameExists = await userDB.userExists('username', req.body.username);
+    const emailExists = await userDB.findUser('email', req.body.email);
+    const usernameExists = await userDB.findUser('username', req.body.username);
 
     if (emailExists || usernameExists) {
       return res.status(409).json({
@@ -33,10 +35,11 @@ class AuthController {
     const data = {
       fullname, username, email, gender, role
     };
-    await sendmail(savedUser.email, savedUser.fullname);
+    // await sendmail(savedUser.email, savedUser.fullname);
+    await codeDB.saveCode(req.userCode, savedUser.id);
     return res.status(201).json({
       status: 201,
-      message: 'User was created successfully, Verify your email to confirm registration',
+      message: 'User was created successfully, Enter the the confirmation code sent to you.',
       data
     });
   }
@@ -48,14 +51,24 @@ class AuthController {
    * @returns {object} The status and some data of the user.
    */
   static async confirmation(req, res) {
-    const checkConfirmation = await userDB.userExists('email', req.params.email);
+    const checkConfirmation = await userDB.findUser('username', req.params.username);
     if (!checkConfirmation) {
       return res.status(404).json({
         status: 404,
         error: 'User not founded'
       });
     }
-    const result = await userDB.confirm(req.params.email);
+
+    const validCode = await codeDB.findCode(req.body.code, checkConfirmation.id);
+    console.log(req.body.code);
+    if (!validCode) {
+      return res.status(422).json({
+        status: 422,
+        error: 'Please enter a valid code'
+      });
+    }
+
+    const result = await userDB.confirm(req.params.username);
     if (result) {
       return res.status(200).json({
         status: 200,
@@ -71,7 +84,7 @@ class AuthController {
    * @returns {object} The status and some data of the user.
    */
   static async signIn(req, res) {
-    const emailExists = await userDB.userExists('email', req.body.email);
+    const emailExists = await userDB.findUser('email', req.body.email);
 
     if (emailExists) {
       if (emailExists.isVerified === false) {
@@ -91,17 +104,20 @@ class AuthController {
           emailExists.role,
           emailExists.isVerified
         );
+        await tokenDB.saveToken(token);
         return res.status(201).json({
           status: 201,
           message: 'User has successfully logged in',
           data: {
             token,
             user: {
-              id: emailExists.id,
               name: emailExists.name,
               profileImg: emailExists.profileImg,
               username: emailExists.username,
               email: emailExists.email,
+              province: emailExists.province,
+              district: emailExists.district,
+              sector: emailExists.sector,
               role: emailExists.role
             }
           }
@@ -121,21 +137,13 @@ class AuthController {
    * @param {object} res The response.
    * @returns {object} The status and message.
    * */
-  // static async logout(req, res) {
-  //   try {
-  //     await userDB.deleteValidToken(req.header('token'));
-  //     return res.status(200).json({
-  //       status: 200,
-  //       message: `${req.user.username} successfully signed out.`
-  //     });
-  //   } catch (error) {
-  //     return res.status(500).json({
-  //       status: 500,
-  //       message: ' something goes wrong ',
-  //       error: error.message
-  //     });
-  //   }
-  // }
+  static async logout(req, res) {
+    await tokenDB.deleteValidToken(req.header('token'));
+    return res.status(200).json({
+      status: 200,
+      message: `${req.user.username} successfully signed out.`
+    });
+  }
 
   /**
    * This method handle the signup request.
@@ -144,8 +152,8 @@ class AuthController {
    * @returns {object} The status and some data of the user.
    */
   // static async adminSignUp(req, res) {
-  //   const emailExists = await userDB.userExists('email', req.body.email);
-  //   const usernameExists = await userDB.userExists('username', req.body.username);
+  //   const emailExists = await userDB.findUser('email', req.body.email);
+  //   const usernameExists = await userDB.findUser('username', req.body.username);
 
   //   if (emailExists || usernameExists) {
   //     return res.status(409).json({

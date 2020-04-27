@@ -34,7 +34,7 @@ const messageGenerator = async (email, name, intro, action, buttonText, link, su
     mailer.setApiKey(process.env.SENDGRID_API_KEY);
     const message = {
       to: `${email}`,
-      from: 'labourforce@noreply',
+      from: 'BarefootNomad@noreply',
       subject,
       text,
       html: emailTemplate
