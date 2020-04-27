@@ -4,6 +4,7 @@ const dummy1 = {
   fullname: 'Vincent Musangamfura',
   email: 'musangamfuravincent@gmail.com',
   username: 'Mvincent',
+  gender: 'Male',
   profileImg: 'https://tnj.com/wp-content/uploads/2018/06/JayM.jpg',
   coverImg: 'https://cdn.pixabay.com/photo/2019/08/07/06/31/landscape-4389957__340.jpg',
   locationIds: [1, 2, 3],

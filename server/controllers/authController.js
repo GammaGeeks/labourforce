@@ -1,7 +1,7 @@
 import userDB from '../helpers/userDB';
 import PasswordHasher from '../helpers/passwordHasher';
 import JWT from '../helpers/JWT';
-// import { sendmail } from '../helpers/email';
+import { sendmail } from '../helpers/email';
 
 /**
  * This class contains all methods
@@ -15,36 +15,31 @@ class AuthController {
    * @param {object} res The response.
    * @returns {object} The status and some data of the user.
    */
-  // static async signUp(req, res) {
-  //   const emailExists = await userDB.userExists('email', req.body.email);
-  //   const usernameExists = await userDB.userExists('username', req.body.username);
+  static async signUp(req, res) {
+    const emailExists = await userDB.userExists('email', req.body.email);
+    const usernameExists = await userDB.userExists('username', req.body.username);
 
-  //   if (emailExists || usernameExists) {
-  //     return res.status(409).json({
-  //       status: 409,
-  //       error: 'This user already exists, use another email or username'
-  //     });
-  //   }
-  //   req.body.role = 'REQUESTER';
-  //   req.body.isVerified = false;
-  //   req.body.rememberMe = false;
-  //   req.body.lineManager = 3;
-  //   req.body.preferredLanguage = 'English';
-  //   req.body.preferredCurrency = 'USD';
-  //   const savedUser = await userDB.saveUser(req.body);
-  //   const {
-  //     name, username, email, department, password, passwordId, birthdate, gender
-  //   } = req.body;
-  //   const user = {
-  //     name, username, email, department, password, passwordId, birthdate, gender
-  //   };
-  //   await sendmail(savedUser.email, savedUser.name);
-  //   return res.status(201).json({
-  //     status: 201,
-  //     message: 'User was created successfully, Verify your email to confirm registration',
-  //     user
-  //   });
-  // }
+    if (emailExists || usernameExists) {
+      return res.status(409).json({
+        status: 409,
+        error: 'This user already exists, use another email or username'
+      });
+    }
+    req.body.isVerified = false;
+    const savedUser = await userDB.saveUser(req.body);
+    const {
+      fullname, username, email, gender, role
+    } = req.body;
+    const user = {
+      fullname, username, email, gender, role
+    };
+    await sendmail(savedUser.email, savedUser.name);
+    return res.status(201).json({
+      status: 201,
+      message: 'User was created successfully, Verify your email to confirm registration',
+      user
+    });
+  }
 
   /**
    * This method handle the signup request.
@@ -52,22 +47,22 @@ class AuthController {
    * @param {object} res The response.
    * @returns {object} The status and some data of the user.
    */
-  // static async confirmation(req, res) {
-  //   const checkConfirmation = await userDB.userExists('email', req.params.email);
-  //   if (!checkConfirmation) {
-  //     return res.status(404).json({
-  //       status: 404,
-  //       error: 'User not found'
-  //     });
-  //   }
-  //   const result = await userDB.confirm(req.params.email);
-  //   if (result) {
-  //     return res.status(200).json({
-  //       status: 200,
-  //       message: 'Email has successfully been verified. You can now login'
-  //     });
-  //   }
-  // }
+  static async confirmation(req, res) {
+    const checkConfirmation = await userDB.userExists('email', req.params.email);
+    if (!checkConfirmation) {
+      return res.status(404).json({
+        status: 404,
+        error: 'User not found'
+      });
+    }
+    const result = await userDB.confirm(req.params.email);
+    if (result) {
+      return res.status(200).json({
+        status: 200,
+        message: 'Email has successfully been verified. You can now login'
+      });
+    }
+  }
 
   /**
    * This method handle the sign request.

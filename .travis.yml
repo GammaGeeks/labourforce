@@ -1,41 +1,28 @@
+global:
+  - CI=true
+  - SECRET_KEY= secret123
+  - NODE_ENV=test
+  - DATABASE_URL_TEST=postgres://postgres@localhost:5432/labourforcedb_test
+  - SENDGRID_API_KEY = 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
+  - TEST_DB_NAME = labourforcedb_test
+
 language: node_js
-
 node_js:
-
- - node
+  - 10.16.2
 
 services:
   - postgresql
 
 cache:
-
- directories:
-
-   - 'node_modules'
-
-env:
-
-  global:
-
-install:
-
-   - npm install   
+  directories:
+    - "node_modules"
 
 before_script:
- - psql -c "CREATE DATABASE test_db;" -U postgres
-
- - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-
- - chmod +x ./cc-test-reporter
-
- - ./cc-test-reporter before-build 
+  - psql -c 'CREATE DATABASE labourforcedb_test;' -U postgres
+  - npm i
 
 script:
-
- - npm run test
-
-after_script:
-
- - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
-
-after_success: npm run coveralls
+  - npm run test
+ 
+after_success:
+  - npm run coveralls
