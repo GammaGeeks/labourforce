@@ -40,8 +40,9 @@ const messageGenerator = async (email, name, intro, action, buttonText, link, su
       html: emailTemplate
     };
     await mailer.send(message);
-  // eslint-disable-next-line no-empty
-  } catch (error) { }
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const sendmail = async (email, name) => {
@@ -51,7 +52,7 @@ const sendmail = async (email, name) => {
     'Welcome, this is LabourForce App',
     'Please confirm your email',
     'Confirm email',
-    `https://labourforce.herokuapp.com/api/user/${email}/confirm`,
+    `https://labourforce.herokuapp.com/api/auth/${email}/confirm`,
     'Labour Force Confirmation mail',
     `${name}, welcome to LabourForce App, please confirm your mail to get started`
   );

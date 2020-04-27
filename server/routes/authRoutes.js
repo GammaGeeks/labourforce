@@ -10,5 +10,6 @@ router.use(passport.initialize());
 
 router.post('/auth/login', signInValidator, errorHandler(authController.signIn));
 router.post('/auth/signup', signUpValidator, passwordHasher, errorHandler(authController.signUp));
+router.get('/auth/:email/confirm', errorHandler(authController.confirmation));
 
 export default router;
