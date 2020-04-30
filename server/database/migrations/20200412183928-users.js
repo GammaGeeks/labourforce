@@ -24,9 +24,9 @@ const up = (queryInterface, Sequelize) => queryInterface.createTable('users', {
   coverImg: {
     type: Sequelize.STRING
   },
-  locationIds: {
-    type: Sequelize.ARRAY(Sequelize.INTEGER)
-  },
+  provinceId: { type: Sequelize.INTEGER },
+  districtId: { type: Sequelize.INTEGER },
+  sectorId: { type: Sequelize.INTEGER },
   phoneNumber: {
     type: Sequelize.STRING
   },

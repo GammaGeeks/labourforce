@@ -1,6 +1,6 @@
 import models from '../models';
 
-const { user, token } = models;
+const { user, token, province, district, sector } = models;
 
 /**
  * This class contains
@@ -14,7 +14,7 @@ class UserDB {
    * @param {string} val value to be found.
    * @returns {object} The users's data.
    */
-  static async userExists(attr, val) {
+  static async findUser(attr, val) {
     const userExists = await user.findOne({
       where: { [attr]: val },
       include:
@@ -23,6 +23,21 @@ class UserDB {
           model: token,
           as: 'token',
           attributes: ['id', 'value']
+        },
+        {
+          model: province,
+          as: 'province',
+          attributes: ['id', 'name']
+        },
+        {
+          model: district,
+          as: 'district',
+          attributes: ['id', 'name']
+        },
+        {
+          model: sector,
+          as: 'sector',
+          attributes: ['id', 'name']
         }
       ]
     });
@@ -30,12 +45,12 @@ class UserDB {
   }
 
   /**
-   * Finds the user's email if he/she exists.
-   * @param {string} email users table field.
+   * Finds the user's username if he/she exists.
+   * @param {string} username users table field.
    * @returns {object} The users's data.
    */
-  static async confirm(email) {
-    const verifiedUser = await user.update({ isVerified: true }, { where: { email } });
+  static async confirm(username) {
+    const verifiedUser = await user.update({ isVerified: true }, { where: { username } });
     return verifiedUser;
   }
 
@@ -51,7 +66,7 @@ class UserDB {
       },
       {
         fields: [
-          'fullname', 'email', 'username', 'gender', 'password', 'locationIds', 'phoneNumber', 'nationalId', 'passportId', 'role', 'isVerified', 'createAt', 'updatedAt'
+          'id', 'fullname', 'email', 'username', 'gender', 'password', 'locationIds', 'phoneNumber', 'nationalId', 'passportId', 'role', 'isVerified', 'createAt', 'updatedAt'
         ]
       }
     );
