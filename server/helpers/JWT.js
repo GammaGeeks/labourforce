@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import TokenDB from './tokenDB';
 import models from '../models';
 
-const { token } = models;
+const { Token } = models;
 
 dotenv.config();
 
@@ -46,7 +46,7 @@ class TokenHelper {
    * @returns {string} The users's hashed password.
    */
   static async generateToken(id, username, email, role, isVerified) {
-    const userTokenExists = await token.findOne({ where: { userId: id } });
+    const userTokenExists = await Token.findOne({ where: { userId: id } });
     if (userTokenExists) {
       return userTokenExists.value;
     }

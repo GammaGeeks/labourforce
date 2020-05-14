@@ -1,4 +1,4 @@
-const up = (queryInterface, Sequelize) => queryInterface.createTable('users', {
+const up = (queryInterface, Sequelize) => queryInterface.createTable('Users', {
   id: {
     allowNull: false,
     autoIncrement: true,
@@ -8,15 +8,15 @@ const up = (queryInterface, Sequelize) => queryInterface.createTable('users', {
   fullname: {
     type: Sequelize.STRING
   },
+  email: {
+    type: Sequelize.STRING,
+    unique: true
+  },
   username: {
     type: Sequelize.STRING
   },
   gender: {
     type: Sequelize.STRING
-  },
-  email: {
-    type: Sequelize.STRING,
-    unique: true
   },
   profileImg: {
     type: Sequelize.STRING
@@ -37,15 +37,19 @@ const up = (queryInterface, Sequelize) => queryInterface.createTable('users', {
   passportId: {
     type: Sequelize.STRING
   },
+  password: {
+    type: Sequelize.STRING
+  },
   role: {
     type: Sequelize.STRING,
     defaultValue: 'EMPLOYER'
   },
-  password: {
-    type: Sequelize.STRING
-  },
   isVerified: {
     type: Sequelize.BOOLEAN
+  },
+  onDuty: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
   },
   createdAt: {
     allowNull: false,
@@ -57,6 +61,6 @@ const up = (queryInterface, Sequelize) => queryInterface.createTable('users', {
   }
 });
 
-const down = (queryInterface) => queryInterface.dropTable('users');
+const down = (queryInterface) => queryInterface.dropTable('Users');
 
 export { up, down };

@@ -1,4 +1,4 @@
-const up = (queryInterface, sequelize) => queryInterface.createTable('Provinces', {
+const up = (queryInterface, sequelize) => queryInterface.createTable('Collections', {
   id: {
     allowNull: false,
     autoIncrement: true,
@@ -8,6 +8,9 @@ const up = (queryInterface, sequelize) => queryInterface.createTable('Provinces'
   name: {
     type: sequelize.STRING
   },
+  sortId: {
+    type: sequelize.INTEGER
+  },
   createdAt: {
     type: sequelize.DATE,
   },
@@ -15,7 +18,7 @@ const up = (queryInterface, sequelize) => queryInterface.createTable('Provinces'
     type: sequelize.DATE,
   },
 });
-const down = (queryInterface) => queryInterface.dropTable('Provinces');
+const down = (queryInterface) => queryInterface.dropTable('Collections');
 
 export {
   up,

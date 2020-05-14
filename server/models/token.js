@@ -1,5 +1,5 @@
 const tokenDefinition = (sequelize, DataTypes) => {
-  const token = sequelize.define('token', {
+  const token = sequelize.define('Token', {
     value: { type: DataTypes.STRING },
     userId: { type: DataTypes.INTEGER },
     createdAt: { type: DataTypes.DATE },
@@ -7,7 +7,7 @@ const tokenDefinition = (sequelize, DataTypes) => {
   }, {});
 
   token.associate = (models) => {
-    token.belongsTo(models.user, {
+    token.belongsTo(models.User, {
       foreignKey: 'userId',
       as: 'user',
       onDelete: 'CASCADE',

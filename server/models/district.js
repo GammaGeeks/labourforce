@@ -1,5 +1,5 @@
 const districtDefinition = (sequelize, DataTypes) => {
-  const district = sequelize.define('district', {
+  const district = sequelize.define('District', {
     provinceId: { type: DataTypes.INTEGER },
     name: { type: DataTypes.STRING },
     createdAt: { type: DataTypes.DATE },
@@ -7,19 +7,24 @@ const districtDefinition = (sequelize, DataTypes) => {
   }, {});
 
   district.associate = (models) => {
-    district.belongsTo(models.province, {
+    district.belongsTo(models.Province, {
       foreignKey: 'provinceId',
       as: 'province',
       onDelete: 'CASCADE',
     });
-    district.hasMany(models.sector, {
+    district.hasMany(models.Sector, {
       foreignKey: 'districtId',
       as: 'sectors',
       onDelete: 'CASCADE',
     });
-    district.hasMany(models.user, {
+    district.hasMany(models.User, {
       foreignKey: 'districtId',
       as: 'users',
+      onDelete: 'CASCADE',
+    });
+    district.hasMany(models.Task, {
+      foreignKey: 'districtId',
+      as: 'tasks',
       onDelete: 'CASCADE',
     });
   };
