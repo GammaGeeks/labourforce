@@ -28,8 +28,8 @@ const province5 = {
   updatedAt: new Date()
 };
 
-const up = (queryInterface) => queryInterface.bulkInsert('provinces', [province1, province2, province3, province4, province5]);
-const down = (queryInterface) => queryInterface.bulkDelete('provinces', null, {});
+const up = (queryInterface) => queryInterface.bulkInsert('Provinces', [province1, province2, province3, province4, province5]);
+const down = (queryInterface) => queryInterface.bulkDelete('Provinces', null, {});
 export {
   up,
   down

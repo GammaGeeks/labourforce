@@ -60,7 +60,6 @@ class AuthController {
     }
 
     const validCode = await codeDB.findCode(req.body.code, checkConfirmation.id);
-    console.log(req.body.code);
     if (!validCode) {
       return res.status(422).json({
         status: 422,
@@ -70,9 +69,19 @@ class AuthController {
 
     const result = await userDB.confirm(req.params.username);
     if (result) {
+      await codeDB.deleteValidCode(req.body.code, checkConfirmation.id);
+      const user = await userDB.findUser('username', req.params.username);
+      const token = await JWT.generateToken(
+        user.id,
+        user.username,
+        user.email,
+        user.role,
+        user.isVerified
+      );
       return res.status(200).json({
         status: 200,
-        message: 'Email has successfully been verified. You can now login in your account'
+        message: 'Email has successfully been verified',
+        token
       });
     }
   }
@@ -110,7 +119,7 @@ class AuthController {
           message: 'User has successfully logged in',
           data: {
             token,
-            user: {
+            data: {
               name: emailExists.name,
               profileImg: emailExists.profileImg,
               username: emailExists.username,
@@ -118,6 +127,8 @@ class AuthController {
               province: emailExists.province,
               district: emailExists.district,
               sector: emailExists.sector,
+              tasks: emailExists.tasks,
+              employeeTasks: emailExists.employeeTasks,
               role: emailExists.role
             }
           }

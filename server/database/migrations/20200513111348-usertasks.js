@@ -1,14 +1,14 @@
-const up = (queryInterface, Sequelize) => queryInterface.createTable('Tokens', {
+const up = (queryInterface, Sequelize) => queryInterface.createTable('UserTasks', {
   id: {
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
     type: Sequelize.INTEGER
   },
-  value: {
-    type: Sequelize.STRING
-  },
   userId: {
+    type: Sequelize.INTEGER
+  },
+  taskId: {
     type: Sequelize.INTEGER
   },
   createdAt: {
@@ -21,7 +21,7 @@ const up = (queryInterface, Sequelize) => queryInterface.createTable('Tokens', {
   }
 });
 
-const down = (queryInterface) => queryInterface.dropTable('Tokens');
+const down = (queryInterface) => queryInterface.dropTable('UserTasks');
 
 export {
   up,

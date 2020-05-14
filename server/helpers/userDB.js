@@ -1,6 +1,14 @@
 import models from '../models';
 
-const { user, token, province, district, sector } = models;
+const {
+  User,
+  Token,
+  Province,
+  District,
+  Sector,
+  Task,
+  UserTask
+} = models;
 
 /**
  * This class contains
@@ -15,29 +23,49 @@ class UserDB {
    * @returns {object} The users's data.
    */
   static async findUser(attr, val) {
-    const userExists = await user.findOne({
+    const userExists = await User.findOne({
       where: { [attr]: val },
       include:
       [
         {
-          model: token,
+          model: Token,
           as: 'token',
           attributes: ['id', 'value']
         },
         {
-          model: province,
+          model: Province,
           as: 'province',
           attributes: ['id', 'name']
         },
         {
-          model: district,
+          model: District,
           as: 'district',
           attributes: ['id', 'name']
         },
         {
-          model: sector,
+          model: Sector,
           as: 'sector',
           attributes: ['id', 'name']
+        },
+        {
+          model: Task,
+          as: 'tasks',
+          required: false,
+          // Pass in the Product attributes that you want to retrieve
+          attributes: ['id', 'title', 'createdAt', 'updatedAt'],
+        },
+        {
+          model: Task,
+          as: 'employeeTasks',
+          required: false,
+          // Pass in the Product attributes that you want to retrieve
+          attributes: ['id', 'title', 'createdAt', 'updatedAt'],
+          through: {
+            // This block of code allows you to retrieve the properties of the join table
+            model: UserTask,
+            as: 'UserTasks',
+            attributes: ['taskId'],
+          }
         }
       ]
     });
@@ -50,7 +78,7 @@ class UserDB {
    * @returns {object} The users's data.
    */
   static async confirm(username) {
-    const verifiedUser = await user.update({ isVerified: true }, { where: { username } });
+    const verifiedUser = await User.update({ isVerified: true }, { where: { username } });
     return verifiedUser;
   }
 
@@ -60,7 +88,7 @@ class UserDB {
    * @returns {object} The users's data.
    */
   static async saveUser(entry) {
-    const acceptedUser = await user.create(
+    const acceptedUser = await User.create(
       {
         ...entry, isVerified: false, createdAt: new Date(), updatedAt: new Date()
       },

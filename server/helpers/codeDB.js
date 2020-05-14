@@ -1,6 +1,6 @@
 import models from '../models';
 
-const { code } = models;
+const { Code } = models;
 
 /**
  * class to deal with all needed operations
@@ -14,7 +14,7 @@ class CodeDB {
    * @returns {string} The users's token.
    */
   static async findCode(validCode, userId) {
-    const savedCode = await code.findOne({
+    const savedCode = await Code.findOne({
       where: { value: validCode, userId }, order: [['createdAt', 'DESC']]
     });
     return savedCode;
@@ -27,7 +27,7 @@ class CodeDB {
    * @returns {string} The users's code.
    */
   static async saveCode(validCode, userId) {
-    const validationCode = await code.create({
+    const validationCode = await Code.create({
       userId,
       value: validCode,
       createdAt: new Date(),
@@ -49,7 +49,7 @@ class CodeDB {
    * @returns {string} The users's token.
    */
   static async deleteValidCode(validCode, userId) {
-    await code.destroy({ where: { value: validCode, userId } });
+    await Code.destroy({ where: { value: validCode, userId } });
   }
 }
 

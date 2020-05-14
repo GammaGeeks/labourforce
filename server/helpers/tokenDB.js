@@ -1,6 +1,6 @@
 import models from '../models';
 
-const { token } = models;
+const { Token } = models;
 
 /**
  * class to deal with all needed operations
@@ -13,7 +13,7 @@ class TokenDB {
    * @returns {string} The users's token.
    */
   static async findToken(jwtToken) {
-    await token.findOne({
+    await Token.findOne({
       where: { value: jwtToken }
     });
   }
@@ -25,7 +25,7 @@ class TokenDB {
    * @returns {string} The users's token.
    */
   static async saveToken(jwtToken, userId) {
-    await token.create({
+    await Token.create({
       value: jwtToken,
       userId,
       createdAt: new Date(),
@@ -39,7 +39,7 @@ class TokenDB {
    * @returns {string} The users's token.
    */
   static async deleteValidToken(jwtToken) {
-    await token.destroy({ where: { value: jwtToken } });
+    await Token.destroy({ where: { value: jwtToken } });
   }
 }
 

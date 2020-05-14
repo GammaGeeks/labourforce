@@ -3,8 +3,8 @@ import jwt from 'jsonwebtoken';
 import models from '../models';
 
 const {
-  user,
-  token
+  User,
+  Token
 } = models;
 
 dotenv.config();
@@ -12,10 +12,10 @@ dotenv.config();
 const tokenValidation = async (req, res, next) => {
   try {
     const verify = jwt.verify(req.header('token'), process.env.SECRET_KEY);
-    const userExists = await user.findOne({
+    const userExists = await User.findOne({
       where: { email: verify.email }
     });
-    const tokenExists = await token.findOne({
+    const tokenExists = await Token.findOne({
       where: { value: req.header('token') }
     });
 

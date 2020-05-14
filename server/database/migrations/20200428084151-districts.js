@@ -1,4 +1,4 @@
-const up = (queryInterface, sequelize) => queryInterface.createTable('districts', {
+const up = (queryInterface, sequelize) => queryInterface.createTable('Districts', {
   id: {
     allowNull: false,
     autoIncrement: true,
@@ -19,7 +19,7 @@ const up = (queryInterface, sequelize) => queryInterface.createTable('districts'
     type: sequelize.DATE,
   },
 });
-const down = (queryInterface) => queryInterface.dropTable('districts');
+const down = (queryInterface) => queryInterface.dropTable('Districts');
 
 export {
   up,

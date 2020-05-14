@@ -181,8 +181,8 @@ const districts = [
   }
 ];
 
-const up = (queryInterface) => queryInterface.bulkInsert('districts', districts);
-const down = (queryInterface) => queryInterface.bulkDelete('districts', null, {});
+const up = (queryInterface) => queryInterface.bulkInsert('Districts', districts);
+const down = (queryInterface) => queryInterface.bulkDelete('Districts', null, {});
 export {
   up,
   down
